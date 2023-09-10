@@ -60,22 +60,27 @@ forest_best = grid_search.best_estimator_  # Obteniendo el mejor modelo
 train_accuracy_optimized = accuracy_score(y_train, forest_best.predict(X_train))  # Calculando el accuracy del modelo optimizado en el conjunto de entrenamiento
 val_accuracy_optimized = accuracy_score(y_val, forest_best.predict(X_val))  # Calculando el accuracy del modelo optimizado en el conjunto de validación
 
-# Imprimir accuracies con 4 decimales
+# Evaluar el modelo en el conjunto de prueba
+test_accuracy_initial = accuracy_score(y_test, forest_clf.predict(X_test))
+test_accuracy_optimized = accuracy_score(y_test, forest_best.predict(X_test))
+
+# Imprimir accuracies
 print(f"Accuracy inicial en entrenamiento: {train_accuracy_initial:.4f}")
 print(f"Accuracy inicial en validación: {val_accuracy_initial:.4f}")
+print(f"Accuracy inicial en prueba: {test_accuracy_initial:.4f}")
 print("------------------------------------------------------")
 print(f"Accuracy optimizado en entrenamiento: {train_accuracy_optimized:.4f}")
 print(f"Accuracy optimizado en validación: {val_accuracy_optimized:.4f}")
-
+print(f"Accuracy optimizado en prueba: {test_accuracy_optimized:.4f}")
 
 
 # Gráfico de Comparación de Accuracies
-accuracies_train = [train_accuracy_initial, train_accuracy_optimized]
+accuracies_test = [test_accuracy_initial, test_accuracy_optimized]
 accuracies_val = [val_accuracy_initial, val_accuracy_optimized]
 labels = ['Inicial', 'Optimizado']
 
 plt.figure(figsize=(10, 6))
-plt.bar(np.arange(len(labels)) - 0.2, accuracies_train, 0.4, label='Entrenamiento', color='blue')
+plt.bar(np.arange(len(labels)) - 0.2, accuracies_test, 0.4, label='Prueba', color='blue')
 plt.bar(np.arange(len(labels)) + 0.2, accuracies_val, 0.4, label='Validación', color='green')
 plt.xticks(np.arange(len(labels)), labels)
 plt.ylabel('Accuracy')
@@ -87,22 +92,22 @@ plt.show()
 Conclusión y Análisis
 
 El modelo de Random Forest inicial, con parámetros predefinidos, logró un accuracy 
-de entrenamiento del 78.26% y un accuracy de validación del 74.68%. Estos valores 
-cercanos entre sí sugieren que el modelo tenía un buen equilibrio entre bias y varianza, 
-sin mostrar signos evidentes de sobreajuste o subajuste.
+de entrenamiento del 78.26%, un accuracy de validación del 74.68% y un accuracy de prueba 
+del 77.27%. Estos valores cercanos entre sí sugieren que el modelo tenía un buen equilibrio 
+entre bias y varianza, sin mostrar signos evidentes de sobreajuste o subajuste.
 
-Sin embargo, tras la optimización de hiperparámetros mediante GridSearch, el modelo 
-mejorado alcanzó un impresionante accuracy de entrenamiento del 96.74%. A pesar de 
-esta mejora en el conjunto de entrenamiento, el accuracy en el conjunto de validación 
-disminuyó a 68.83%. Esta discrepancia significativa entre los accuracies de entrenamiento 
-y validación en el modelo optimizado es un indicativo claro de sobreajuste.El modelo se ha 
-adaptado demasiado bien a los datos de entrenamiento, perdiendo capacidad de generalización
-en datos no vistos.
+Tras la optimización de hiperparámetros mediante GridSearch, el modelo mejorado alcanzó 
+un accuracy de entrenamiento del 92.17%. A pesar de esta mejora en el conjunto de entrenamiento, 
+el accuracy en el conjunto de validación fue del 74.03% y en el conjunto de prueba del 70.78%. 
+Aunque el rendimiento en el conjunto de validación se mantuvo relativamente estable, hubo una 
+disminución en el conjunto de prueba. La discrepancia entre el accuracy de entrenamiento y los 
+accuracies de validación y prueba en el modelo optimizado sugiere un ligero sobreajuste. El modelo 
+se ha adaptado muy bien a los datos de entrenamiento, pero ha perdido algo de capacidad de generalización 
+en datos no vistos, especialmente en el conjunto de prueba.
 
-Aunque la optimización de hiperparámetros puede mejorar significativamente 
-el rendimiento en el conjunto de entrenamiento, es esencial evaluar el modelo en un conjunto 
-de validación para asegurarse de que no esté sobreajustando. En este caso, sería recomendable 
-explorar técnicas de regularización o ajustar nuevamente los hiperparámetros para obtener un 
-modelo que generalice mejor en datos no vistos.
+Aunque la optimización de hiperparámetros puede mejorar el rendimiento en el conjunto de entrenamiento, 
+es esencial evaluar el modelo en conjuntos de validación y prueba para asegurarse de que no esté sobreajustando. 
+En este caso, sería recomendable explorar técnicas de regularización o ajustar nuevamente los hiperparámetros 
+para obtener un modelo que generalice mejor en datos no vistos.
 
 """
