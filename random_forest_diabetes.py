@@ -82,3 +82,27 @@ plt.ylabel('Accuracy')
 plt.title('Comparación de Accuracies')
 plt.legend()
 plt.show()
+
+"""
+Conclusión y Análisis
+
+El modelo de Random Forest inicial, con parámetros predefinidos, logró un accuracy 
+de entrenamiento del 78.26% y un accuracy de validación del 74.68%. Estos valores 
+cercanos entre sí sugieren que el modelo tenía un buen equilibrio entre bias y varianza, 
+sin mostrar signos evidentes de sobreajuste o subajuste.
+
+Sin embargo, tras la optimización de hiperparámetros mediante GridSearch, el modelo 
+mejorado alcanzó un impresionante accuracy de entrenamiento del 96.74%. A pesar de 
+esta mejora en el conjunto de entrenamiento, el accuracy en el conjunto de validación 
+disminuyó a 68.83%. Esta discrepancia significativa entre los accuracies de entrenamiento 
+y validación en el modelo optimizado es un indicativo claro de sobreajuste.El modelo se ha 
+adaptado demasiado bien a los datos de entrenamiento, perdiendo capacidad de generalización
+en datos no vistos.
+
+Aunque la optimización de hiperparámetros puede mejorar significativamente 
+el rendimiento en el conjunto de entrenamiento, es esencial evaluar el modelo en un conjunto 
+de validación para asegurarse de que no esté sobreajustando. En este caso, sería recomendable 
+explorar técnicas de regularización o ajustar nuevamente los hiperparámetros para obtener un 
+modelo que generalice mejor en datos no vistos.
+
+"""
